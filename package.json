@@ -1,0 +1,27 @@
+{
+  "name": "example-koa",
+  "version": "1.0.0",
+  "description": "An example for koa",
+  "main": "index.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandonxiang/example-koa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandonxiang/example-koa/issues"
+  },
+  "homepage": "https://github.com/brandonxiang/example-koa#readme",
+  "dependencies": {
+    "babel-core": "6.13.2",
+    "babel-polyfill": "6.13.0",
+    "babel-preset-es2015-node6": "0.3.0",
+    "babel-preset-stage-3": "6.5.0",
+    "koa": "^2.0.0"
+  }
+}
