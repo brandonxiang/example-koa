@@ -1,22 +1,37 @@
 const Koa = require('koa');
-
-const bodyParser = require('koa-bodyparser');
-
-const controller = require('./controller');
-
 const app = new Koa();
+const views = require('koa-views');
+const json = require('koa-json');
+const onerror = require('koa-onerror');
+const bodyparser = require('koa-bodyparser')();
+const logger = require('koa-logger');
 
-// log request URL:
+const index = require('./routes/index');
+const users = require('./routes/users');
+
+// error handler
+onerror(app);
+
+// middlewares
+app.use(bodyparser);
+app.use(json());
+app.use(logger());
+app.use(require('koa-static')(__dirname + '/public'));
+
+app.use(views(__dirname + '/views', {
+  extension: 'pug'
+}));
+
+// logger
 app.use(async (ctx, next) => {
-    console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
-    await next();
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-// parse request body:
-app.use(bodyParser());
+// routes
+app.use(index.routes(), index.allowedMethods());
+app.use(users.routes(), users.allowedMethods());
 
-// add controllers:
-app.use(controller());
-
-app.listen(3000);
-console.log('app started at port 3000...');
+module.exports = app;
